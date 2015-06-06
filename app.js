@@ -9,15 +9,9 @@ var config = require('./config.json')
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
+var connectionManager = require('./socketConnection');
 
-io.on('connection', function (socket) {
-    console.log("socket connection");
-
-    socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-        console.log(data);
-    });
-});
+io.on('connection', connectionManager);
 
 // setup middleware
 //app.use(favicon(__dirname + '/public/favicon.png'));

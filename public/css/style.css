@@ -1,8 +1,10 @@
-body {
+/* Shared */
+html, body {
 	background: #dfdfdf;
 	padding: 0;
 	margin: 0;
 	font-family: 'Roboto', sans-serif;
+	height: 100%;
 }
 
 .header-line {
@@ -23,39 +25,62 @@ a:hover {
 	color: #3B6A6F;
 }
 
+/* Main app */
 .header-bar {
 	width: 100%;
-	height: 60px;
+	height: 50px;
 	background: #eeeeee;
 	border-bottom: 1px solid rgb(219, 208, 208);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 200;
 }
 .header-bar .title {
-	width: 390px;
+	width: 20%;
 	border-right: 1px solid rgb(219, 208, 208);
 	height: 100%;
-	padding: 13px 0 0 20px;
-	font-size: 32px;
+	padding: 4px 0 0 20px;
+	font-size: 28px;
 	color: #e74c3c;
+	font-weight: 300;
 }
 .header-bar .title small {
-	font-size: 50%;
+	font-size: 45%;
 }
 .header-bar .user-bar {
-	float: right;
-	margin: 12px 35px 0 0;
+	margin: 10px 35px 0 0;
+	position: absolute;
+	top: 0;
+	right: 0px;
+	width: 150px;
+}
+.header-bar .user-bar .details {
+	position: absolute;
+	left: 38px;
+	top: 0;
+	font-size: 13px;
+	
+}
+.header-bar .user-bar .details .status {
+	font-size: 10px;
 }
 .header-bar .user-bar img {
-	width: 41px;
+	width: 32px;
+	height: 32px;
 	vertical-align: middle;
-	border-radius: 80px;
+	border-radius: 5px;
+	margin-right: 5px;
 }
 
 .conversation-list {
 	background: #FFFFFF;
-	width: 410px;
-	height: 918px;
+	width: 20%;
+	height: 100%;
 	border-right: 1px solid rgb(219, 208, 208);
 	overflow-y: scroll;
+	float: left;
+	padding-top: 50px;
 }
 
 .conversation-item {
@@ -65,7 +90,7 @@ a:hover {
 }
 .conversation-item img {
 	width: 64px;
-	border-radius: 80px;
+	border-radius: 5px;
 	vertical-align: top;
 }
 .conversation-item .conversation-data-wrapper {
@@ -77,13 +102,13 @@ a:hover {
 	left: 84px;
 	font-weight: 500;
 }
-.conversation-item .conversation-data-wrapper .last-seen {
+/*.conversation-item .conversation-data-wrapper .last-seen {
 	position: absolute;
 	top: 25px;
 	right: 14px;
 	font-weight: 300;
 	font-size: 12px;
-}
+}*/
 .conversation-item .conversation-data-wrapper .brief {
 	position: absolute;
 	top: 45px;
@@ -93,10 +118,10 @@ a:hover {
 }
 
 .conversation-wrapper {
-	position: absolute;
-	top: 61px;
-	left: 411px;
-	width: 1509px;
+	padding-top: 50px;
+	width: 80%;
+	height: 100%;
+	float: left;
 }
 .conversation-wrapper .user-bar {
 	background: white;
@@ -105,13 +130,12 @@ a:hover {
 	color: rgb(82, 68, 68);
 }
 .conversation-wrapper .user-bar .wrapper {
-	width: 1200px;
+	width: 70%;
 	margin: 0 auto;
-	padding-left: 24px;
 }
 .conversation-wrapper .user-bar .user-info-links {
 	float: right;
-	margin: 6px 25px 0 0;
+	margin: 6px 0 0 0;
 }
 .user-info-links a {
 	margin-right: 10px;
@@ -122,16 +146,17 @@ a:hover {
 .conversation-wrapper .user-bar img {
 	width: 33px;
 	vertical-align: middle;
-	border-radius: 80px;
+	border-radius: 5px;
+	margin-right: 6px;
 }
 
 .chat-stream {
-	width: 1200px;
-	height: 850px;
+	width: 70%;
+	height: 100%;
 	margin: 0 auto;
 }
 .chat-stream .messages {
-	height: 810px;
+	height: 100%;
 	overflow-y: scroll;
 }
 .chat-stream .message {
@@ -151,8 +176,8 @@ a:hover {
 	border: 0;
 	padding: 10px;
 	border-radius: 5px;
-	width: 1168px;
-	margin: 6px 0 0 12px;
+	width: 100%;
+	margin: 8px 0 0 0;
 	outline: none;
 }
 .clear {
@@ -161,12 +186,6 @@ a:hover {
 
 /* Auth */
 
-.middle-container .alert {
-    position: absolute;
-    top: -60px;
-    left: 0;
-    width: 100%;
-}
 .auth-window, .hello-window {
 	position: absolute;
     top: 50%;
@@ -182,6 +201,13 @@ a:hover {
     padding: 20px;
 
 	border-radius: 3px;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+.auth-window .alert {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    width: 100%;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
 .auth-window img {

@@ -1,209 +1,40 @@
-<div class="header-line">&nbsp;</div>
-
 <div class="header-bar">
 	<div class="user-bar">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=40" />
-		Aaron Claydon
+		<img src="{{ user.avatarURL }}" />
+		<div class="details">
+			<div class="name">{{ user.playerName }}</div>
+			<div class="status">{{ formatStatus(user) }}</div>
+		</div>
 	</div>
 
-	<div class="title">
+	<div class="title" ng-click="resume()">
 		pocketSteam <small>Alpha</small>
 	</div>
 </div>
 
 <div class="conversation-list">
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
+	<div class="conversation-item" ng-repeat="friend in friends">
+		<img src="{{ friend.avatarURL }}" />
 
 		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Online</div>
-			<div class="brief">Hey, how are you?</div>
+			<div class="name">{{ friend.playerName }}</div>
+			<div class="brief">{{ formatStatus(friend) }}</div>
 		</div>
 	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Yesterday</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">24/01/15</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Online</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Yesterday</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">24/01/15</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Online</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Yesterday</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">24/01/15</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Online</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Yesterday</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">24/01/15</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Online</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Yesterday</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">24/01/15</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Online</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">Yesterday</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
-	<div class="conversation-item">
-		<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=64" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">Aaron Claydon</div>
-			<div class="last-seen">24/01/15</div>
-			<div class="brief">Hey, how are you?</div>
-		</div>
-	</div>
-
 </div>
 
 <div class="conversation-wrapper">
 	<div class="user-bar">
 		<div class="wrapper">
 			<div class="user-info-links">
-				<a href="#">Call</a>
-				<a href="#">Nudge</a>
-				<a href="#">Info</a>
+				<a href="#">Profile</a>
 			</div>
 			<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=32" />
-			Aaron Claydon <small>Last seen 12 minutes ago</small>
+			Aaron Claydon <small>Playing Tetris</small>
 		</div>
 	</div>
 
-	<div class="chat-stream" id="test">
+	<div class="chat-stream">
 		<div class="messages">
 			<div class="message">
 				Hello
@@ -238,66 +69,6 @@
 			<div class="message">
 				How are you?
 			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
 		</div>
 
 		<div class="input-box">
@@ -305,3 +76,16 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+	function resize() {
+		$(".chat-stream").height($(".conversation-wrapper").height() - $(".conversation-wrapper .user-bar").height() - $(".input-box").height() - 30);
+	}
+	$(document).ready(function() {
+		resize();
+
+		$(window).resize(function() {
+			resize();
+		});
+	});
+</script>

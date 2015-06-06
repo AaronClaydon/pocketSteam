@@ -1,16 +1,18 @@
 <div class="header-line">&nbsp;</div>
 
 <div class="auth-window">
+	<div class="alert alert-warning" ng-if="error"><strong>Error </strong> {{ error }}</div>
+
 	<img src="http://placekitten.com/g/128/128">
 	<h2>pocketSteam</h2>
-	<form method="POST">
+	<form ng-submit="login()">
 		<div class="login-group">
 			<div class="has-feedback has-feedback-left">
-				<input type="text" id="username" name="username" placeholder="Username">
+				<input type="text" ng-model="username" placeholder="Username">
 				<i class="glyphicon glyphicon-user form-control-feedback form-control-feedback-left"></i>
 			</div>
 			<div class="has-feedback has-feedback-left">
-				<input type="password" id="password" name="password" placeholder="Password">
+				<input type="password" ng-model="password" placeholder="Password">
 				<i class="glyphicon glyphicon-lock form-control-feedback"></i>
 			</div>
 		</div>
