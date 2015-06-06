@@ -26,13 +26,23 @@ controllers.controller('LoginController', function($scope, $rootScope, $location
 });
 
 controllers.controller('AppController', function($scope, $rootScope, Steam) {
+    function scrollMessagesToBottom() {
+        var $target = $('.messages');
+        $target.animate({scrollTop: $target.height()}, 600);
+    }
+
     $rootScope.title = 'USERNAME';
 
     $scope.steamid = "";
     $scope.friends = {};
     $scope.user = {};
+    $scope.messages = [];
+    $scope.currentFriend = "";
 
     $scope.formatStatus = function(user) {
+        if(user == undefined)
+            return;
+
         var status = "Unknown";
 
         switch (user.personaState) {
@@ -70,6 +80,21 @@ controllers.controller('AppController', function($scope, $rootScope, Steam) {
         Steam.emit('resume', {username: 'azzytest'});
     }
 
+    $scope.selectFriend = function(friend) {
+        $scope.currentFriend = friend.friendid;
+
+        console.log($scope.currentFriend);
+    }
+
+    $scope.sendMessage = function() {
+        $scope.messages[$scope.currentFriend].push({message: $scope.newMessage, sender: true});
+        Steam.emit('friend:message', {steamid: $scope.currentFriend, message: $scope.newMessage});
+
+        $scope.newMessage = "";
+        scrollMessagesToBottom();
+        return false;
+    }
+
     Steam.on('steamid', function(data) {
         console.log('steamid', data);
         $scope.steamid = data;
@@ -79,6 +104,9 @@ controllers.controller('AppController', function($scope, $rootScope, Steam) {
         console.log('friend', friend);
 
         $scope.friends[friend.friendid] = friend;
+        if($scope.messages[friend.friendid] == undefined) {
+            $scope.messages[friend.friendid] = [];
+        }
     });
     Steam.on('me', function(friend) {
         console.log('me', friend);
@@ -90,5 +118,14 @@ controllers.controller('AppController', function($scope, $rootScope, Steam) {
 
     Steam.on('friendMessage', function(data) {
         console.log('msg', data);
+
+        if(data.type == 1) {
+            data.sender = false;
+            $scope.messages[data.steamid].push(data);
+
+            console.log($scope.messages);
+
+            scrollMessagesToBottom();
+        }
     });
 });

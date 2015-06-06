@@ -8,16 +8,23 @@ module.exports = function (socket) {
                 value.socket = socket;
 
                 socket.emit('steamid', value.client.steamID);
-                //socket.emit('friends', client.client.friends); //client.client :)
-                //client.client.requestFriendData(["76561198008014218"]);
                 value.requestFriends();
+
+                socket['steam'] = value;
             }
         });
     });
 
+    socket.on('friend:message', function (request) {
+        socket['steam'].client.sendMessage(request.steamid, request.message);
+    });
+
     socket.on('login', function (request) {
-        client = new SteamClient(socket, request.username, request.password);
-        client.connect();
-        clients.push(client);
+        loginClient = new SteamClient(socket, request.username, request.password);
+
+        socket['steam'] = loginClient;
+        clients.push(loginClient);
+
+        loginClient.connect();
     });
 }

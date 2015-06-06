@@ -1,6 +1,6 @@
 <div class="header-bar">
 	<div class="user-bar">
-		<img src="{{ user.avatarURL }}" />
+		<img ng-src="{{ user.avatarURL }}" />
 		<div class="details">
 			<div class="name">{{ user.playerName }}</div>
 			<div class="status">{{ formatStatus(user) }}</div>
@@ -13,8 +13,8 @@
 </div>
 
 <div class="conversation-list">
-	<div class="conversation-item" ng-repeat="friend in friends">
-		<img src="{{ friend.avatarURL }}" />
+	<div class="conversation-item" ng-repeat="friend in friends" ng-click="selectFriend(friend)">
+		<img ng-src="{{ friend.avatarURL }}" />
 
 		<div class="conversation-data-wrapper">
 			<div class="name">{{ friend.playerName }}</div>
@@ -29,50 +29,31 @@
 			<div class="user-info-links">
 				<a href="#">Profile</a>
 			</div>
-			<img src="https://s.gravatar.com/avatar/700996b587d8cc39e1b3257db3aa3334?s=32" />
-			Aaron Claydon <small>Playing Tetris</small>
+			<img ng-src="{{ friends[currentFriend].avatarURL }}" />
+			{{ friends[currentFriend].playerName }} <small>{{ formatStatus(friends[currentFriend]) }}</small>
 		</div>
 	</div>
 
 	<div class="chat-stream">
 		<div class="messages">
-			<div class="message">
-				Hello
-			</div>
+			<span ng-repeat="message in messages[currentFriend]">
+				<div class="message" ng-class="{'message-sender': message.sender}">
+					{{ message.message }}
+				</div>
 
-			<div class="message">
-				How are you?
-			</div>
-
-			<div class="message message-sender">
-				Hey, I'm great
-			</div>
-
-			<div class="clear"></div>
-
-			<div class="message message-sender">
+				<div class="clear" ng-if="message.sender"></div>
+			</span>
+			<!-- <div class="message message-sender">
 				What about you LOVE?
 			</div>
 
-			<div class="clear"></div>
-
-			<div class="message message-sender">
-				What about you LOVE?
-			</div>
-
-			<div class="clear"></div>
-
-			<div class="message">
-				Hello
-			</div>
-
-			<div class="message">
-				How are you?
-			</div>
+			<div class="clear"></div> -->
 		</div>
 
 		<div class="input-box">
-			<input type="text" placeholder="Type something" />
+			<form ng-submit="sendMessage()">
+				<input type="text" placeholder="Type something" ng-model="newMessage" />
+			</form>
 		</div>
 	</div>
 </div>

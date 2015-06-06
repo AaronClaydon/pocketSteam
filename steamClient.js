@@ -45,8 +45,6 @@ SteamClient.prototype.connect = function() {
     }).bind(this));
 
     this.client.on('friendMsg', (function(steamid, message, type) {
-    	console.log(steamid, type, message);
-
         this.socket.emit('friendMessage', {steamid: steamid, type: type, message: message});
     }).bind(this));
 
