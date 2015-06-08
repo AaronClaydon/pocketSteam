@@ -15,6 +15,7 @@ controllers.controller('LoginController', function($scope, $rootScope, $location
     };
 
     Steam.on('login:success', function(data) {
+        localStorage.setItem('token', data);
         $location.path('/app');
     });
     Steam.on('login:failed', function(data) {
@@ -25,11 +26,15 @@ controllers.controller('LoginController', function($scope, $rootScope, $location
     $rootScope.title = 'Login';
 });
 
-controllers.controller('AppController', function($scope, $rootScope, Steam) {
+controllers.controller('AppController', function($scope, $rootScope, $location, Steam) {
     function scrollMessagesToBottom() {
         var $target = $('.messages');
         $target.animate({scrollTop: $target.height()}, 600);
     }
+
+    setTimeout(function() {
+        Steam.emit('resume', {token: localStorage.getItem('token')});
+    }, 500);
 
     $rootScope.title = 'USERNAME';
 
@@ -40,14 +45,14 @@ controllers.controller('AppController', function($scope, $rootScope, Steam) {
     $scope.currentFriend = "";
 
     //test data
-    $scope.currentFriend = 1;
-    $scope.user = {playerName: "AmazingAzzy", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"};
-    $scope.friends = {
-        1: {friendid: 1, playerName: "Test One", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"},
-        2: {friendid: 2, playerName: "Test Two", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"},
-        3: {friendid: 3, playerName: "Test Three", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"},
-        4: {friendid: 4, playerName: "Test Four", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"}
-        }
+    // $scope.currentFriend = 1;
+    // $scope.user = {playerName: "AmazingAzzy", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"};
+    // $scope.friends = {
+    //     1: {friendid: 1, playerName: "Test One", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"},
+    //     2: {friendid: 2, playerName: "Test Two", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"},
+    //     3: {friendid: 3, playerName: "Test Three", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"},
+    //     4: {friendid: 4, playerName: "Test Four", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"}
+    //     }
 
     $scope.formatStatus = function(user) {
         if(user == undefined)
@@ -86,10 +91,6 @@ controllers.controller('AppController', function($scope, $rootScope, Steam) {
         return status;
     }
 
-    $scope.resume = function() {
-        Steam.emit('resume', {username: 'azzytest'});
-    }
-
     $scope.selectFriend = function(friend) {
         $scope.currentFriend = friend.friendid;
         $("#nav-trigger").prop( "checked", false );
@@ -106,9 +107,8 @@ controllers.controller('AppController', function($scope, $rootScope, Steam) {
         return false;
     }
 
-    Steam.on('steamid', function(data) {
-        console.log('steamid', data);
-        $scope.steamid = data;
+    Steam.on('resume:failed', function(data) {
+        $location.path('/login');
     });
 
     Steam.on('friend', function(friend) {

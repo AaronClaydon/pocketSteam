@@ -1,7 +1,8 @@
 var Steam = require('steam');
 
-function SteamClient(socket, username, password) {
+function SteamClient(socket, token, username, password) {
     this.socket = socket;
+    this.token = token;
     this.username = username;
     this.password = password;
     this.client = new Steam.SteamClient();
@@ -22,7 +23,7 @@ SteamClient.prototype.connect = function() {
 
     //Steam client handling
     this.client.on('loggedOn', (function() {
-        this.socket.emit('login:success');
+        this.socket.emit('login:success', this.token);
 
     	this.client.setPersonaState(Steam.EPersonaState.Online);
     }).bind(this));
@@ -59,6 +60,8 @@ SteamClient.prototype.connect = function() {
     		errorReason = 'Steam guard needs implementing';
 
         this.socket.emit('login:failed', {message: errorReason, steamGuard: false});
+
+        delete module.exports.List[this.token];
     }).bind(this));
 };
 
@@ -83,4 +86,25 @@ SteamClient.prototype.requestFriends = function() {
     }
 }
 
-module.exports = SteamClient;
+SteamClient.prototype.logout = function() {
+    this.client.logOff();
+    delete module.exports.List[this.token];
+}
+
+SteamClient.prototype.timeOut = function() {
+    this.socket = undefined;
+    console.log("time out started");
+
+    //check if they've reconnected
+    setTimeout((function() {
+        if(module.exports.List[this.token] == undefined)
+            return;
+            
+        if(module.exports.List[this.token].socket == undefined) {
+            this.logout();
+        }
+    }).bind(this), 10000);
+}
+
+module.exports.Client = SteamClient;
+module.exports.List = {};

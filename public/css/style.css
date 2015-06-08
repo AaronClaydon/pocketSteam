@@ -5,6 +5,7 @@ html, body {
 	margin: 0;
 	font-family: 'Roboto', sans-serif;
 	height: 100%;
+	overflow: hidden;
 }
 
 .header-line {
@@ -354,11 +355,15 @@ input {
 	    background-size: contain;
 	}
 	.nav-trigger:checked + label {
-	    /* change to x? */
+	    left: -50px;
 	}
 
 	.nav-trigger:checked ~ .conversation-list {
 	    left: 0px;
+	}
+
+	.nav-trigger + label, .conversation-list {
+	    transition: left 0.2s;
 	}
 
 	/* misc changes */
@@ -369,5 +374,10 @@ input {
 
 	.conversation-wrapper .user-bar .wrapper, .chat-stream {
 		width: 100%;
+	}
+
+	.chat-stream .message {
+		width: 100%;
+		margin: 0 0 0 0;
 	}
 }

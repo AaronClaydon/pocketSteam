@@ -1,30 +1,49 @@
-var SteamClient = require('./steamClient');
-var clients = [];
+var steamClient = require('./steamClient');
+var SteamClient = steamClient.Client;
+var uuid = require('uuid');
 
 module.exports = function (socket) {
     socket.on('resume', function (request) {
-        clients.forEach(function(value) {
-            if(value.username == request.username) { //obv needs to be more secure than this
-                value.socket = socket;
+        var value = steamClient.List[request.token];
 
-                socket.emit('steamid', value.client.steamID);
-                value.requestFriends();
+        if(value == undefined) {
+            socket.emit('resume:failed');
+        }
 
-                socket['steam'] = value;
-            }
-        });
+        value.socket = socket;
+        value.requestFriends();
+
+        socket['steam'] = value;
     });
 
     socket.on('friend:message', function (request) {
+        if(socket['steam'] == undefined)
+            return;
+
         socket['steam'].client.sendMessage(request.steamid, request.message);
     });
 
     socket.on('login', function (request) {
-        loginClient = new SteamClient(socket, request.username, request.password);
+        var token = uuid.v4();
+        loginClient = new SteamClient(socket, token, request.username, request.password);
 
         socket['steam'] = loginClient;
-        clients.push(loginClient);
+        steamClient.List[token] = loginClient;
 
         loginClient.connect();
+    });
+
+    socket.on('logout', function (request) {
+        if(socket['steam'] == undefined)
+            return;
+
+        socket['steam'].logout();
+    });
+
+    socket.on('disconnect', function() {
+        if(socket['steam'] == undefined)
+            return;
+
+        socket['steam'].timeOut();
     });
 }
