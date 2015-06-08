@@ -39,6 +39,16 @@ controllers.controller('AppController', function($scope, $rootScope, Steam) {
     $scope.messages = [];
     $scope.currentFriend = "";
 
+    //test data
+    $scope.currentFriend = 1;
+    $scope.user = {playerName: "AmazingAzzy", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"};
+    $scope.friends = {
+        1: {friendid: 1, playerName: "Test One", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"},
+        2: {friendid: 2, playerName: "Test Two", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"},
+        3: {friendid: 3, playerName: "Test Three", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"},
+        4: {friendid: 4, playerName: "Test Four", gamePlayedAppId: 0, personaState: 1, avatarURL: "http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f0/f0bf2e17b6c1221bda42328df1c5bcecdbc95be9_full.jpg"}
+        }
+
     $scope.formatStatus = function(user) {
         if(user == undefined)
             return;
@@ -82,6 +92,7 @@ controllers.controller('AppController', function($scope, $rootScope, Steam) {
 
     $scope.selectFriend = function(friend) {
         $scope.currentFriend = friend.friendid;
+        $("#nav-trigger").prop( "checked", false );
 
         console.log($scope.currentFriend);
     }

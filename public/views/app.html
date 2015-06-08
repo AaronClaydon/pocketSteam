@@ -1,59 +1,60 @@
 <div class="header-bar">
-	<div class="user-bar">
+	<!-- <div class="user-bar">
 		<img ng-src="{{ user.avatarURL }}" />
 		<div class="details">
 			<div class="name">{{ user.playerName }}</div>
 			<div class="status">{{ formatStatus(user) }}</div>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="title" ng-click="resume()">
 		pocketSteam <small>Alpha</small>
 	</div>
 </div>
 
-<div class="conversation-list">
-	<div class="conversation-item" ng-repeat="friend in friends" ng-click="selectFriend(friend)">
-		<img ng-src="{{ friend.avatarURL }}" />
-
-		<div class="conversation-data-wrapper">
-			<div class="name">{{ friend.playerName }}</div>
-			<div class="brief">{{ formatStatus(friend) }}</div>
-		</div>
-	</div>
-</div>
-
-<div class="conversation-wrapper">
-	<div class="user-bar">
-		<div class="wrapper">
-			<div class="user-info-links">
-				<a href="#">Profile</a>
-			</div>
-			<img ng-src="{{ friends[currentFriend].avatarURL }}" />
-			{{ friends[currentFriend].playerName }} <small>{{ formatStatus(friends[currentFriend]) }}</small>
-		</div>
-	</div>
-
-	<div class="chat-stream">
-		<div class="messages">
-			<span ng-repeat="message in messages[currentFriend]">
-				<div class="message" ng-class="{'message-sender': message.sender}">
-					{{ message.message }}
+<div class="main-container">
+	<div class="conversation-wrapper">
+		<div class="user-bar">
+			<div class="wrapper">
+				<div class="user-info-links">
+					<a href="#">Profile</a>
+					<a href="#">Trade</a>
 				</div>
-
-				<div class="clear" ng-if="message.sender"></div>
-			</span>
-			<!-- <div class="message message-sender">
-				What about you LOVE?
+				<img ng-src="{{ friends[currentFriend].avatarURL }}" />
+				{{ friends[currentFriend].playerName }} <small>{{ formatStatus(friends[currentFriend]) }}</small>
 			</div>
-
-			<div class="clear"></div> -->
 		</div>
 
-		<div class="input-box">
-			<form ng-submit="sendMessage()">
-				<input type="text" placeholder="Type something" ng-model="newMessage" />
-			</form>
+		<div class="chat-stream">
+			<div class="messages">
+				<span ng-repeat="message in messages[currentFriend]">
+					<div class="message" ng-class="{'message-sender': message.sender}">
+						{{ message.message }}
+					</div>
+
+					<div class="clear" ng-if="message.sender"></div>
+				</span>
+			</div>
+
+			<div class="input-box">
+				<form ng-submit="sendMessage()">
+					<input type="text" placeholder="Type something" ng-model="newMessage" />
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+	<label for="nav-trigger"></label>
+
+	<div class="conversation-list">
+		<div class="conversation-item" ng-repeat="friend in friends" ng-click="selectFriend(friend)">
+			<img ng-src="{{ friend.avatarURL }}" />
+
+			<div class="conversation-data-wrapper">
+				<div class="name">{{ friend.playerName }}</div>
+				<div class="brief">{{ formatStatus(friend) }}</div>
+			</div>
 		</div>
 	</div>
 </div>

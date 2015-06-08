@@ -38,7 +38,7 @@ a:hover {
 	z-index: 200;
 }
 .header-bar .title {
-	width: 20%;
+	width: 380px;
 	border-right: 1px solid rgb(219, 208, 208);
 	height: 100%;
 	padding: 4px 0 0 20px;
@@ -74,14 +74,22 @@ a:hover {
 	margin-right: 5px;
 }
 
+.main-container {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
 .conversation-list {
 	background: #FFFFFF;
-	width: 20%;
+	width: 380px;
 	height: 100%;
 	border-right: 1px solid rgb(219, 208, 208);
 	overflow-y: scroll;
-	float: left;
 	padding-top: 50px;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .conversation-item {
@@ -119,11 +127,25 @@ a:hover {
 }
 
 .conversation-wrapper {
-	padding-top: 50px;
-	width: 80%;
+	width: 100%;
 	height: 100%;
-	float: left;
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding-top: 50px;
+	padding-left: 380px;
 }
+/*
+.conversation-wrapper {
+	padding-top: 50px;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 280px;
+}
+*/
+
 .conversation-wrapper .user-bar {
 	background: white;
 	padding: 8px;
@@ -301,5 +323,51 @@ input {
 	.auth-window .alert {
 		position: absolute;
 		top: 300px;;
+	}
+}
+
+
+@media (max-width: 800px) {
+	/* hamburger nav */
+	.conversation-wrapper {
+		padding-left: 0px;
+	}
+
+	.conversation-list {
+		left: -100%;
+		width: 100%;
+	}
+
+	.nav-trigger {
+	    position: absolute;
+	    clip: rect(0, 0, 0, 0);
+	}
+	label[for="nav-trigger"] {
+	    position: fixed;
+	    top: 15px;
+	    left: 15px;
+	    z-index: 20000;
+		width: 25px;
+	    height: 25px;
+	    cursor: pointer;
+	    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+	    background-size: contain;
+	}
+	.nav-trigger:checked + label {
+	    /* change to x? */
+	}
+
+	.nav-trigger:checked ~ .conversation-list {
+	    left: 0px;
+	}
+
+	/* misc changes */
+	.header-bar .title {
+		border-right: 0;
+		padding-left: 45px;
+	}
+
+	.conversation-wrapper .user-bar .wrapper, .chat-stream {
+		width: 100%;
 	}
 }
