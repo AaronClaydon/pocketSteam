@@ -1,6 +1,7 @@
 var steamClient = require('./steamClient');
 var SteamClient = steamClient.Client;
 var uuid = require('uuid');
+var config = require('./config.json');
 
 module.exports = function (socket) {
     socket.on('resume', function (request) {
@@ -25,6 +26,13 @@ module.exports = function (socket) {
     });
 
     socket.on('login', function (request) {
+        if(config.whitelist != undefined) { //whitelist is enabled
+            if(config.whitelist.indexOf(request.username) == -1) {
+                socket.emit('login:failed', {message: 'Your account is not whitelisted', steamGuard: false});
+                return;
+            }
+        }
+
         var token = uuid.v4();
         loginClient = new SteamClient(socket, token, request.username, request.password, request.settings);
 

@@ -24,12 +24,11 @@ Requires NodeJS.
 
 Run `npm install`
 
-Create config.json file
-
-```
-{
-    "port": 80 //Port the application will run on
-}
-```
+Create config.json file - spec is below
 
 Run `node app.js`
+
+## Config
+`port` the port the web server runs on
+
+`whitelist` *(optional)* array of usernames that are allowed to use it. If not set then anyone can login
