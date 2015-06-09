@@ -10,7 +10,7 @@ controllers.controller('LoginController', function($scope, $rootScope, $location
 
     $scope.login = function() {
         $scope.error = "";
-        Steam.emit('login', {username: $scope.username, password: $scope.password});
+        Steam.emit('login', {username: $scope.username, password: $scope.password, settings: {"persistent": false, "timeout": 10000, "platform": "web"}});
         return false;
     };
 
@@ -95,7 +95,7 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
         $scope.currentFriend = friend.friendid;
         $("#nav-trigger").prop( "checked", false );
 
-        console.log($scope.currentFriend);
+        $scope.friends[$scope.currentFriend].unread = 0;
     }
 
     $scope.sendMessage = function() {
@@ -107,6 +107,11 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
         return false;
     }
 
+    $scope.logout = function() {
+        Steam.emit('logout');
+        $location.path('/login');
+    }
+
     Steam.on('resume:failed', function(data) {
         $location.path('/login');
     });
@@ -114,7 +119,14 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
     Steam.on('friend', function(friend) {
         console.log('friend', friend);
 
+        if($scope.friends[friend.friendid] == undefined) {
+            friend.unread = 0;
+        } else {
+            friend.unread = $scope.friends[friend.friendid].unread;
+        }
+
         $scope.friends[friend.friendid] = friend;
+
         if($scope.messages[friend.friendid] == undefined) {
             $scope.messages[friend.friendid] = [];
         }
@@ -134,7 +146,9 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
             data.sender = false;
             $scope.messages[data.steamid].push(data);
 
-            console.log($scope.messages);
+            if($scope.currentFriend != data.steamid) {
+                $scope.friends[data.steamid].unread++;
+            }
 
             scrollMessagesToBottom();
         }

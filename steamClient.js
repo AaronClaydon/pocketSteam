@@ -1,13 +1,27 @@
 var Steam = require('steam');
 
-function SteamClient(socket, token, username, password) {
+function SteamClient(socket, token, username, password, settings) {
     this.socket = socket;
     this.token = token;
     this.username = username;
     this.password = password;
+    this.settings = parseSettings(settings);
     this.client = new Steam.SteamClient();
 
     this.friends = {};
+}
+
+function parseSettings(userSettings) {
+    var settings = {};
+    var defaults = {"persistent": false, "timeout": 10000, "platform": "web", "pushToken": ""};
+
+    for (var key in defaults) {
+        var val = userSettings[key] || defaults[key];
+
+        settings[key] = val;
+    }
+
+    return settings;
 }
 
 function generateAvatarURL(hashBuffer) {
@@ -28,11 +42,10 @@ SteamClient.prototype.connect = function() {
     	this.client.setPersonaState(Steam.EPersonaState.Online);
     }).bind(this));
 
-    // this.client.on('relationships', (function() {
-    //     this.socket.emit('friends', this.client.friends);
-    // }).bind(this));
-
     this.client.on('user', (function(friend) {
+        if(this.socket == undefined)
+            return;
+
         friend.avatarURL = generateAvatarURL(friend.avatarHash);
 
         if(this.client.steamID == friend.friendid) {
@@ -46,7 +59,8 @@ SteamClient.prototype.connect = function() {
     }).bind(this));
 
     this.client.on('friendMsg', (function(steamid, message, type) {
-        this.socket.emit('friendMessage', {steamid: steamid, type: type, message: message});
+        if(this.socket != undefined)
+            this.socket.emit('friendMessage', {steamid: steamid, type: type, message: message});
     }).bind(this));
 
     this.client.on('error', (function(e) {
@@ -66,15 +80,6 @@ SteamClient.prototype.connect = function() {
 };
 
 SteamClient.prototype.requestFriends = function() {
-    // var friendRequestIDs = [];
-    // for(var id in this.client.friends) {
-    //     friendRequestIDs.push(id);
-    // }
-    // this.client.requestFriendData(friendRequestIDs, Steam.EClientPersonaStateFlag.PlayerName | Steam.EClientPersonaStateFlag.Presence | Steam.EClientPersonaStateFlag.SourceID | Steam.EClientPersonaStateFlag.GameExtraInfo);
-    // this.friends.forEach(function(friend) {
-    //     this.socket.emit('friend', friend);
-    // });
-
     for(var id in this.friends) {
         var friend = this.friends[id];
 
@@ -93,17 +98,18 @@ SteamClient.prototype.logout = function() {
 
 SteamClient.prototype.timeOut = function() {
     this.socket = undefined;
-    console.log("time out started");
 
-    //check if they've reconnected
-    setTimeout((function() {
-        if(module.exports.List[this.token] == undefined)
-            return;
-            
-        if(module.exports.List[this.token].socket == undefined) {
-            this.logout();
-        }
-    }).bind(this), 10000);
+    if(!this.settings['persistent']) {
+        //check if they've reconnected
+        setTimeout((function() {
+            if(module.exports.List[this.token] == undefined)
+                return;
+
+            if(module.exports.List[this.token].socket == undefined) {
+                this.logout();
+            }
+        }).bind(this), this.settings['timeout']);
+    }
 }
 
 module.exports.Client = SteamClient;

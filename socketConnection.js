@@ -8,6 +8,7 @@ module.exports = function (socket) {
 
         if(value == undefined) {
             socket.emit('resume:failed');
+            return;
         }
 
         value.socket = socket;
@@ -25,7 +26,7 @@ module.exports = function (socket) {
 
     socket.on('login', function (request) {
         var token = uuid.v4();
-        loginClient = new SteamClient(socket, token, request.username, request.password);
+        loginClient = new SteamClient(socket, token, request.username, request.password, request.settings);
 
         socket['steam'] = loginClient;
         steamClient.List[token] = loginClient;

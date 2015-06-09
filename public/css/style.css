@@ -50,30 +50,6 @@ a:hover {
 .header-bar .title small {
 	font-size: 45%;
 }
-.header-bar .user-bar {
-	margin: 10px 35px 0 0;
-	position: absolute;
-	top: 0;
-	right: 0px;
-	width: 150px;
-}
-.header-bar .user-bar .details {
-	position: absolute;
-	left: 38px;
-	top: 0;
-	font-size: 13px;
-
-}
-.header-bar .user-bar .details .status {
-	font-size: 10px;
-}
-.header-bar .user-bar img {
-	width: 32px;
-	height: 32px;
-	vertical-align: middle;
-	border-radius: 5px;
-	margin-right: 5px;
-}
 
 .main-container {
 	width: 100%;
@@ -91,6 +67,41 @@ a:hover {
 	position: absolute;
 	top: 0;
 	left: 0;
+}
+
+.conversation-list .user-bar {
+	margin: 10px 35px 0 0;
+	position: relative;
+	border-bottom: 1px solid rgb(237, 234, 234);
+	width: 100%;
+	padding: 0 0 10px 10px;
+}
+.conversation-list .user-bar .details {
+	position: absolute;
+	left: 48px;
+	top: 0;
+	font-size: 13px;
+}
+.conversation-list .user-bar .details .status {
+	font-size: 10px;
+}
+.conversation-list .user-bar img {
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+	border-radius: 5px;
+	margin-right: 5px;
+}
+.conversation-list .user-bar .buttons {
+	margin: 5px;
+}
+
+.conversation-list .section-title {
+	padding: 4px 10px;
+	border-bottom: 1px solid rgb(237, 234, 234);
+	background: rgb(247, 247, 247);
+	color: rgb(142, 136, 136);
+	width: 100%;
 }
 
 .conversation-item {
@@ -111,6 +122,12 @@ a:hover {
 	top: 22px;
 	left: 84px;
 	font-weight: 500;
+}
+.conversation-item .conversation-data-wrapper .unread {
+	position: absolute;
+	right: 20px;
+	top: 30px;
+	padding: 5px;
 }
 /*.conversation-item .conversation-data-wrapper .last-seen {
 	position: absolute;

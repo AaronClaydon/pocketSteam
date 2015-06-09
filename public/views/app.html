@@ -48,12 +48,34 @@
 	<label for="nav-trigger"></label>
 
 	<div class="conversation-list">
+		<div class="section-title">
+			You
+		</div>
+
+		<div class="user-bar">
+			<img ng-src="{{ user.avatarURL }}" />
+			<div class="details">
+				<div class="name">{{ user.playerName }}</div>
+				<div class="status">{{ formatStatus(user) }}</div>
+			</div>
+
+			<div class="buttons pull-right">
+				<button class="btn btn-warning btn-xs" ng-click="logout()">Logout</button>
+			</div>
+		</div>
+
+		<div class="section-title">
+			Friends
+		</div>
+
 		<div class="conversation-item" ng-repeat="friend in friends" ng-click="selectFriend(friend)">
 			<img ng-src="{{ friend.avatarURL }}" />
 
 			<div class="conversation-data-wrapper">
 				<div class="name">{{ friend.playerName }}</div>
 				<div class="brief">{{ formatStatus(friend) }}</div>
+
+				<div class="badge badge-danger unread" ng-if="friend.unread != 0">{{ friend.unread }}</div>
 			</div>
 		</div>
 	</div>
