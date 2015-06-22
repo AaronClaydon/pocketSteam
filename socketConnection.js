@@ -34,7 +34,7 @@ module.exports = function (socket) {
         }
 
         var token = uuid.v4();
-        loginClient = new SteamClient(socket, token, request.username, request.password, request.settings);
+        loginClient = new SteamClient(socket, token, request.username, request.password, request.steamGuard, request.settings);
 
         socket['steam'] = loginClient;
         steamClient.List[token] = loginClient;

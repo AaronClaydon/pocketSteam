@@ -199,6 +199,7 @@ a:hover {
 .chat-stream .messages {
 	height: 100%;
 	overflow-y: scroll;
+	padding-bottom: 98px;
 }
 .chat-stream .message {
 	background: #f2f5f6;
@@ -212,6 +213,9 @@ a:hover {
 	background: #00a7eb;
 	color: white;
 	margin: 12px 12px 0 0;
+}
+.chat-stream .input-box {
+	margin-top: -98px;
 }
 .chat-stream .input-box input {
 	border: 0;
@@ -234,8 +238,8 @@ a:hover {
 
     width: 300px;
     margin-left: -150px;
-    height: 300px;
-    margin-top: -150px;
+    height: 330px;
+    margin-top: -165px;
 
     background: #FAFAFA;
     border-radius: 5px;
@@ -286,6 +290,9 @@ a:hover {
 .login-group input[type="password"] {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
+}
+.login-group .steamGuard {
+	display: none;
 }
 
 input {

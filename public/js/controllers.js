@@ -7,10 +7,12 @@ controllers.controller('HomeController', function($scope, $rootScope) {
 controllers.controller('LoginController', function($scope, $rootScope, $location, Steam) {
     $scope.username = 'azzytest';
     $scope.password = 'password';
+    $scope.steamGuard = '';
 
     $scope.login = function() {
         $scope.error = "";
-        Steam.emit('login', {username: $scope.username, password: $scope.password, settings: {"persistent": false, "timeout": 10000, "platform": "web"}});
+        Steam.emit('login', {username: $scope.username, password: $scope.password, settings: {"persistent": false, "timeout": 10000, "platform": "web"}}); //production
+        //Steam.emit('login', {username: $scope.username, password: $scope.password, steamGuard: $scope.steamGuard, settings: {"persistent": true, "timeout": 10000, "platform": "web"}}); //testing
         return false;
     };
 
@@ -21,6 +23,7 @@ controllers.controller('LoginController', function($scope, $rootScope, $location
     Steam.on('login:failed', function(data) {
         console.log("failed", data);
         $scope.error = data.message;
+        $scope.steamguardReq = data.steamGuard;
     });
 
     $rootScope.title = 'Login';
@@ -33,7 +36,8 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
     }
 
     setTimeout(function() {
-        Steam.emit('resume', {token: localStorage.getItem('token')});
+        Steam.emit('resume', {token: localStorage.getItem('token')}); //production
+        //Steam.emit('resume', {token: '454195e2-bb0d-487b-867a-a2373b276313'}); //testing
     }, 500);
 
     $rootScope.title = 'USERNAME';

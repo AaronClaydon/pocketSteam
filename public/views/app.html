@@ -72,16 +72,3 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-	function resize() {
-		$(".chat-stream").height($(".conversation-wrapper").height() - $(".conversation-wrapper .user-bar").height() - $(".input-box").height() - 30);
-	}
-	$(document).ready(function() {
-		resize();
-
-		$(window).resize(function() {
-			resize();
-		});
-	});
-</script>

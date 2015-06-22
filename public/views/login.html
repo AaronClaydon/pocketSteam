@@ -15,6 +15,10 @@
 				<input type="password" ng-model="password" placeholder="Password">
 				<i class="glyphicon glyphicon-lock form-control-feedback"></i>
 			</div>
+			<div class="has-feedback has-feedback-left" ng-class="{'steamGuard': !steamguardReq}">
+				<input type="text" ng-model="steamGuard" placeholder="Steamguard">
+				<i class="glyphicon glyphicon-lock form-control-feedback"></i>
+			</div>
 		</div>
 		<input type="submit" class="btn btn-primary btn-lg btn-block" value="Login with Steam">
 	</form>

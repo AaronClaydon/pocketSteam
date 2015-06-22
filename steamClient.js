@@ -1,10 +1,12 @@
 var Steam = require('steam');
+var fs = require('fs');
 
-function SteamClient(socket, token, username, password, settings) {
+function SteamClient(socket, token, username, password, steamGuard, settings) {
     this.socket = socket;
     this.token = token;
     this.username = username;
     this.password = password;
+    this.steamGuard = steamGuard;
     this.settings = parseSettings(settings);
     this.client = new Steam.SteamClient();
 
@@ -30,10 +32,19 @@ function generateAvatarURL(hashBuffer) {
 }
 
 SteamClient.prototype.connect = function() {
-    this.client.logOn({
-		accountName: this.username,
-		password: this.password
-	});
+    if(this.steamGuard === undefined || this.steamGuard === '') {
+        this.client.logOn({
+    		accountName: this.username,
+    		password: this.password,
+            shaSentryfile: (fs.existsSync('sentry/' + this.username) ? fs.readFileSync('sentry/' + this.username) : undefined)
+    	});
+    } else {
+        this.client.logOn({
+    		accountName: this.username,
+    		password: this.password,
+            authCode: this.steamGuard
+    	});
+    }
 
     //Steam client handling
     this.client.on('loggedOn', (function() {
@@ -64,18 +75,27 @@ SteamClient.prototype.connect = function() {
     }).bind(this));
 
     this.client.on('error', (function(e) {
-    	var errorReason = 'unknown';
+    	var errorReason = 'unknown error code: ' + e.eresult;
+        var steamGuard = false;
 
     	if(e.eresult == Steam.EResult.InvalidPassword)
     		errorReason = 'Invalid username and/or password';
     	else if(e.eresult == Steam.EResult.AlreadyLoggedInElsewhere)
     		errorReason = 'Already logged in elsewhere';
-    	else if(e.eresult == Steam.EResult.AccountLoginDenied)
-    		errorReason = 'Steam guard needs implementing';
+    	else if(e.eresult == Steam.EResult.AccountLogonDenied) {
+            errorReason = 'Please enter your Steam Guard key';
+            steamGuard = true;
+        }
 
-        this.socket.emit('login:failed', {message: errorReason, steamGuard: false});
+        this.socket.emit('login:failed', {message: errorReason, steamGuard: steamGuard});
 
         delete module.exports.List[this.token];
+    }).bind(this));
+
+    this.client.on('sentry', (function(sentry) {
+        var wstream = fs.createWriteStream('sentry/' + this.username);
+        wstream.write(sentry);
+        wstream.end();
     }).bind(this));
 };
 

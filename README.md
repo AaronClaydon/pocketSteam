@@ -26,6 +26,8 @@ Run `npm install`
 
 Create config.json file - spec is below
 
+Create `sentry` folder in app root
+
 Run `node app.js`
 
 ## Config
