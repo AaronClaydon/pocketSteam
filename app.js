@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./config.json');
+var winston = require('winston');
+winston.add(winston.transports.File, { filename: 'log.txt' });
 
 var app = express();
 var server = require('http').createServer(app);
@@ -15,7 +17,7 @@ io.on('connection', connectionManager);
 
 // setup middleware
 //app.use(favicon(__dirname + '/public/favicon.png'));
-app.use(logger('dev'));
+//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -23,7 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.all('/*', function(req, res, next) {
     // Just send the index.html for other files to support HTML5Mode
-    res.sendfile('index.html', { root: __dirname });
+    res.sendFile('index.html', { root: __dirname });
 });
+
+winston.info('Server started', config);
 
 server.listen(config.port);

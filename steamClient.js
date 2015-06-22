@@ -1,5 +1,6 @@
 var Steam = require('steam');
 var fs = require('fs');
+var winston = require('winston');
 
 function SteamClient(socket, token, username, password, steamGuard, settings) {
     this.socket = socket;
@@ -32,11 +33,15 @@ function generateAvatarURL(hashBuffer) {
 }
 
 SteamClient.prototype.connect = function() {
+    var tfa = false; //2fa auth
+
     if(this.steamGuard === undefined || this.steamGuard === '') {
+        tfa = fs.existsSync('sentry/' + this.username);
+
         this.client.logOn({
     		accountName: this.username,
     		password: this.password,
-            shaSentryfile: (fs.existsSync('sentry/' + this.username) ? fs.readFileSync('sentry/' + this.username) : undefined)
+            shaSentryfile: (tfa ? fs.readFileSync('sentry/' + this.username) : undefined)
     	});
     } else {
         this.client.logOn({
@@ -44,11 +49,14 @@ SteamClient.prototype.connect = function() {
     		password: this.password,
             authCode: this.steamGuard
     	});
+
+        tfa = true;
     }
 
     //Steam client handling
     this.client.on('loggedOn', (function() {
         this.socket.emit('login:success', this.token);
+        winston.info('Login success', {username: this.username, steamguard: tfa, settings: this.settings})
 
     	this.client.setPersonaState(Steam.EPersonaState.Online);
     }).bind(this));
@@ -88,6 +96,7 @@ SteamClient.prototype.connect = function() {
         }
 
         this.socket.emit('login:failed', {message: errorReason, steamGuard: steamGuard});
+        winston.info('Login failed', {username: this.username, reason: errorReason})
 
         delete module.exports.List[this.token];
     }).bind(this));
@@ -96,6 +105,8 @@ SteamClient.prototype.connect = function() {
         var wstream = fs.createWriteStream('sentry/' + this.username);
         wstream.write(sentry);
         wstream.end();
+
+        winston.info('Sentry file saved', {username: this.username})
     }).bind(this));
 };
 

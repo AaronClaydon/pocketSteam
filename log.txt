@@ -1,0 +1,12 @@
+{"level":"info","message":"Started on port 45628","timestamp":"2015-06-22T19:46:17.580Z"}
+2015-06-22T19:47:05.640Z - info: Started on port 45628
+{"level":"info","message":"Started on port  45628","timestamp":"2015-06-22T19:47:26.526Z"}
+{"port":45628,"level":"info","message":"Server started","timestamp":"2015-06-22T19:47:47.616Z"}
+{"port":45628,"level":"info","message":"Server started","timestamp":"2015-06-22T19:54:17.004Z"}
+{"username":"azzytest","reason":"Invalid username and/or password","level":"info","message":"Login failed","timestamp":"2015-06-22T19:54:34.583Z"}
+{"username":"azzytest","steamguard":true,"level":"info","message":"Login success","timestamp":"2015-06-22T19:54:55.137Z"}
+{"port":45628,"level":"info","message":"Server started","timestamp":"2015-06-22T19:57:44.556Z"}
+{"username":"azzytest","reason":"Invalid username and/or password","level":"info","message":"Login failed","timestamp":"2015-06-22T19:57:49.020Z"}
+{"username":"azzytest","steamguard":true,"settings":{"persistent":false,"timeout":10000,"platform":"web","pushToken":""},"level":"info","message":"Login success","timestamp":"2015-06-22T19:57:53.829Z"}
+{"port":45628,"level":"info","message":"Server started","timestamp":"2015-06-22T19:58:12.819Z"}
+{"port":45628,"level":"info","message":"Server started","timestamp":"2015-06-22T19:58:24.310Z"}
