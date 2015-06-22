@@ -34,3 +34,5 @@ Run `node app.js`
 `port` the port the web server runs on
 
 `whitelist` *(optional)* array of usernames that are allowed to use it. If not set then anyone can login
+
+`loggly` *(optional)* authentication config for logging to loggly (passwords are **not** logged)

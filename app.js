@@ -8,6 +8,11 @@ var config = require('./config.json');
 var winston = require('winston');
 winston.add(winston.transports.File, { filename: 'log.txt' });
 
+if(config.loggly != undefined) {
+    var Loggly = require('winston-loggly').Loggly;
+    winston.add(Loggly, config.loggly);
+}
+
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
