@@ -6,6 +6,9 @@ A web based Steam chat client. Runs on NodeJS and provides a Web Client as well 
  * Session resuming
     * You have X amount of time to resume connection before log out
  * Chat to your friends
+ * Steam guard support
+    * Allow users to enter code
+    * Save guard SHA hash
 
 ## TODO
  * Push notifications for mobile app
@@ -15,9 +18,6 @@ A web based Steam chat client. Runs on NodeJS and provides a Web Client as well 
     * Games owned
     * Friends
  * Trading
- * Steam guard support
-    * Allow users to enter code
-    * Save guard SHA hash
 
 ## Install
 Requires NodeJS.
