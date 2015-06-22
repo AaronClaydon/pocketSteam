@@ -5,13 +5,13 @@ controllers.controller('HomeController', function($scope, $rootScope) {
 });
 
 controllers.controller('LoginController', function($scope, $rootScope, $location, Steam) {
-    $scope.username = 'azzytest';
-    $scope.password = 'password';
+    $scope.username = '';
+    $scope.password = '';
     $scope.steamGuard = '';
 
     $scope.login = function() {
         $scope.error = "";
-        Steam.emit('login', {username: $scope.username, password: $scope.password, settings: {"persistent": false, "timeout": 10000, "platform": "web"}}); //production
+        Steam.emit('login', {username: $scope.username, password: $scope.password, steamGuard: $scope.steamGuard, settings: {"persistent": false, "timeout": 10000, "platform": "web"}}); //production
         //Steam.emit('login', {username: $scope.username, password: $scope.password, steamGuard: $scope.steamGuard, settings: {"persistent": true, "timeout": 10000, "platform": "web"}}); //testing
         return false;
     };
