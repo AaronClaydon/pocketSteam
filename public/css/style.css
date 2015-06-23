@@ -332,22 +332,51 @@ input {
 .hello-window {
 	width: 500px;
     margin-left: -250px;
-    height: 400px;
+    height: 300px;
+    margin-top: -150px;
+}
+.hello-window.faq {
+	height: 400px;
     margin-top: -200px;
+}
+.hello-window h1, .hello-window h2, .hello-window h3, .hello-window h4, .hello-window h5, .hello-window h6 {
+	margin-top: 0;
+}
+.hello-window .weblogin a:link, .hello-window .weblogin a:visited {
+	border: 0;
+	color: white;
+	font-size: 22px;
+	padding: 9px 19px;
+	text-transform: uppercase;
+}
+.hello-window .weblogin {
+	margin-top: 40px;
+}
+.hello-window .downloads, .hello-window .weblogin {
+	text-align: center;
+}
+.hello-window .downloads img {
+	height: 50px;
 }
 
 @media (max-width: 500px) {
+	html, body {
+		background: #FAFAFA;
+	}
 	.auth-window, .hello-window {
 		width: 100%;
 		height: 100%;
 		margin: 0;
 		top: 0;
 		left: 0;
+		background: transparent;
+		box-shadow: none;
 	}
 
 	.auth-window .alert {
 		position: absolute;
-		top: 300px;;
+		bottom: 10px;
+		top: auto;
 	}
 }
 

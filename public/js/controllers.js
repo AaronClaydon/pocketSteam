@@ -4,6 +4,10 @@ controllers.controller('HomeController', function($scope, $rootScope) {
     $rootScope.title = 'Home';
 });
 
+controllers.controller('FAQController', function($scope, $rootScope) {
+    $rootScope.title = 'FAQ';
+});
+
 controllers.controller('LoginController', function($scope, $rootScope, $location, Steam) {
     $scope.username = '';
     $scope.password = '';

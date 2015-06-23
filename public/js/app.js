@@ -17,6 +17,10 @@ pocketSteamApp.config(function($routeProvider, $locationProvider) {
         templateUrl: 'views/home.html',
         controller: 'HomeController'
     }).
+    when('/faq', {
+        templateUrl: 'views/faq.html',
+        controller: 'FAQController'
+    }).
     when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginController'
