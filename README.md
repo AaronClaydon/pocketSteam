@@ -9,6 +9,7 @@ A web based Steam chat client. Runs on NodeJS and provides a Web Client as well 
  * Steam guard support
     * Allow users to enter code
     * Save guard SHA hash
+ * Settings autoreload (not port - that requires app restart)
 
 ## TODO
  * Push notifications for mobile app
@@ -18,7 +19,6 @@ A web based Steam chat client. Runs on NodeJS and provides a Web Client as well 
     * Games owned
     * Friends
  * Trading
- * Settings reload
  * Console commands
     * View connected
     * Modify whitelist

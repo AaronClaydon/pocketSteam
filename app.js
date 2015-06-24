@@ -5,9 +5,11 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
-var config = require('./config.json');
+var config = require('./config');
 var winston = require('winston');
 winston.add(winston.transports.File, { filename: 'log.txt' });
+
+config.init('./config.json');
 
 if(config.loggly != undefined) {
     var Loggly = require('winston-loggly').Loggly;
@@ -30,7 +32,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/api/info', function(req, res) {
     var info = {};
     info.version = pack.version;
-    info.whitelist = (config.whitelist !== undefined);
+    info.online = (config.current.offlineMessage === undefined);
+    if(!info.online) {
+        info.offlineMessage = config.current.offlineMessage;
+    }
+
+    info.whitelist = (config.current.whitelist !== undefined);
     info.connected = Object.keys(steamClient.List).length;
 
     res.json(info);
@@ -40,6 +47,6 @@ app.all('/*', function(req, res) {
     res.sendFile('index.html', { root: __dirname });
 });
 
-winston.info('Server started', config);
+winston.info('Server started', config.current);
 
-server.listen(config.port);
+server.listen(config.current.port);

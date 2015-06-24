@@ -1,12 +1,12 @@
 var steamClient = require('./steamClient');
 var SteamClient = steamClient.Client;
 var uuid = require('uuid');
-var config = require('./config.json');
+var config = require('./config');
 
 module.exports = function (socket) {
     //tell them straight away that we're offline
-    if(config.offlineMessage !== undefined) {
-        socket.emit('login:failed', {message: config.offlineMessage, steamGuard: false});
+    if(config.current.offlineMessage !== undefined) {
+        socket.emit('login:failed', {message: config.current.offlineMessage, steamGuard: false});
         return;
     }
 
@@ -17,8 +17,8 @@ module.exports = function (socket) {
             socket.emit('resume:failed');
             return;
         }
-        if(config.offlineMessage !== undefined) {
-            socket.emit('login:failed', {message: config.offlineMessage, steamGuard: false});
+        if(config.current.offlineMessage !== undefined) {
+            socket.emit('login:failed', {message: config.current.offlineMessage, steamGuard: false});
             return;
         }
 
@@ -41,13 +41,13 @@ module.exports = function (socket) {
             return;
         }
 
-        if(config.offlineMessage !== undefined) {
-            socket.emit('login:failed', {message: config.offlineMessage, steamGuard: false});
+        if(config.current.offlineMessage !== undefined) {
+            socket.emit('login:failed', {message: config.current.offlineMessage, steamGuard: false});
             return;
         }
 
-        if(config.whitelist !== undefined) { //whitelist is enabled
-            if(config.whitelist.indexOf(request.username) == -1) {
+        if(config.current.whitelist !== undefined) { //whitelist is enabled
+            if(config.current.whitelist.indexOf(request.username) == -1) {
                 socket.emit('login:failed', {message: 'Your account is not whitelisted', steamGuard: false});
                 return;
             }
