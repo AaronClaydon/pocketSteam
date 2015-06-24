@@ -1,8 +1,9 @@
+var pack = require('./package.json');
+var steamClient = require('./steamClient');
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var config = require('./config.json');
 var winston = require('winston');
@@ -22,14 +23,20 @@ io.on('connection', connectionManager);
 
 // setup middleware
 //app.use(favicon(__dirname + '/public/favicon.png'));
-//app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.all('/*', function(req, res, next) {
-    // Just send the index.html for other files to support HTML5Mode
+app.get('/api/info', function(req, res) {
+    var info = {};
+    info.version = pack.version;
+    info.whitelist = (config.whitelist !== undefined);
+    info.connected = Object.keys(steamClient.List).length;
+
+    res.json(info);
+});
+
+app.all('/*', function(req, res) {
     res.sendFile('index.html', { root: __dirname });
 });
 

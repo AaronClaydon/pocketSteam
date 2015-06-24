@@ -63,7 +63,7 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
     //     }
 
     $scope.formatStatus = function(user) {
-        if(user == undefined)
+        if(user === undefined)
             return;
 
         var status = "Unknown";
@@ -127,7 +127,7 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
     Steam.on('friend', function(friend) {
         console.log('friend', friend);
 
-        if($scope.friends[friend.friendid] == undefined) {
+        if($scope.friends[friend.friendid] === undefined) {
             friend.unread = 0;
         } else {
             friend.unread = $scope.friends[friend.friendid].unread;
@@ -135,7 +135,7 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
 
         $scope.friends[friend.friendid] = friend;
 
-        if($scope.messages[friend.friendid] == undefined) {
+        if($scope.messages[friend.friendid] === undefined) {
             $scope.messages[friend.friendid] = [];
         }
     });

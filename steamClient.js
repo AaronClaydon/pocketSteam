@@ -86,11 +86,11 @@ SteamClient.prototype.connect = function() {
     	var errorReason = 'unknown error code: ' + e.eresult;
         var steamGuard = false;
 
-    	if(e.eresult == Steam.EResult.InvalidPassword)
+    	if(e.eresult === Steam.EResult.InvalidPassword) {
     		errorReason = 'Invalid username and/or password';
-    	else if(e.eresult == Steam.EResult.AlreadyLoggedInElsewhere)
+    	} else if(e.eresult === Steam.EResult.AlreadyLoggedInElsewhere) {
     		errorReason = 'Already logged in elsewhere';
-    	else if(e.eresult == Steam.EResult.AccountLogonDenied) {
+        } else if(e.eresult === Steam.EResult.AccountLogonDenied) {
             errorReason = 'Please enter your Steam Guard key';
             steamGuard = true;
         }
@@ -114,7 +114,7 @@ SteamClient.prototype.requestFriends = function() {
     for(var id in this.friends) {
         var friend = this.friends[id];
 
-        if(this.client.steamID == friend.friendid) {
+        if(this.client.steamID === friend.friendid) {
             this.socket.emit('me', friend);
         } else {
             this.socket.emit('friend', friend);
@@ -133,7 +133,7 @@ SteamClient.prototype.timeOut = function() {
     if(!this.settings['persistent']) {
         //check if they've reconnected
         setTimeout((function() {
-            if(module.exports.List[this.token] == undefined)
+            if(module.exports.List[this.token] === undefined)
                 return;
 
             if(module.exports.List[this.token].socket == undefined) {
