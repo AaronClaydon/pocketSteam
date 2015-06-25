@@ -63,8 +63,9 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
     //     }
 
     $scope.formatStatus = function(user) {
-        if(user === undefined)
+        if(user === undefined) {
             return;
+        }
 
         var status = "Unknown";
 
@@ -92,7 +93,7 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
                 break;
         }
 
-        if(user.gamePlayedAppId != 0) {
+        if(user.gamePlayedAppId !== 0) {
             status = user.gameName;
         }
 
@@ -120,7 +121,7 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
         $location.path('/login');
     }
 
-    Steam.on('resume:failed', function(data) {
+    Steam.on('resume:failed', function() {
         $location.path('/login');
     });
 
@@ -150,11 +151,11 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
     Steam.on('friendMessage', function(data) {
         console.log('msg', data);
 
-        if(data.type == 1) {
+        if(data.type === 1) {
             data.sender = false;
             $scope.messages[data.steamid].push(data);
 
-            if($scope.currentFriend != data.steamid) {
+            if($scope.currentFriend !== data.steamid) {
                 $scope.friends[data.steamid].unread++;
             }
 

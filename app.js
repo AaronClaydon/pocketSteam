@@ -7,11 +7,12 @@ var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 var config = require('./config');
 var winston = require('winston');
+var consoleUI = require('./consoleUI');
 winston.add(winston.transports.File, { filename: 'log.txt' });
 
 config.init('./config.json');
 
-if(config.loggly != undefined) {
+if(config.loggly !== undefined) {
     var Loggly = require('winston-loggly').Loggly;
     winston.add(Loggly, config.loggly);
 }
@@ -50,3 +51,4 @@ app.all('/*', function(req, res) {
 winston.info('Server started', config.current);
 
 server.listen(config.current.port);
+consoleUI.start();

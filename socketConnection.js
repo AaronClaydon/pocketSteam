@@ -13,7 +13,7 @@ module.exports = function (socket) {
     socket.on('resume', function (request) {
         var value = steamClient.List[request.token];
 
-        if(value == undefined) {
+        if(value === undefined) {
             socket.emit('resume:failed');
             return;
         }
@@ -29,8 +29,9 @@ module.exports = function (socket) {
     });
 
     socket.on('friend:message', function (request) {
-        if(socket['steam'] === undefined)
+        if(socket['steam'] === undefined) {
             return;
+        }
 
         socket['steam'].client.sendMessage(request.steamid, request.message);
     });
@@ -47,7 +48,7 @@ module.exports = function (socket) {
         }
 
         if(config.current.whitelist !== undefined) { //whitelist is enabled
-            if(config.current.whitelist.indexOf(request.username) == -1) {
+            if(config.current.whitelist.indexOf(request.username) === -1) {
                 socket.emit('login:failed', {message: 'Your account is not whitelisted', steamGuard: false});
                 return;
             }
@@ -62,14 +63,15 @@ module.exports = function (socket) {
         loginClient.connect();
     });
 
-    socket.on('logout', function (request) {
-        if(socket['steam'] === undefined)
+    socket.on('logout', function () {
+        if(socket['steam'] === undefined) {
             return;
+        }
 
         socket['steam'].logout();
     });
 
-    socket.on('disconnect', function() {
+    socket.on('disconnect', function () {
         if(socket['steam'] === undefined) {
             return;
         }

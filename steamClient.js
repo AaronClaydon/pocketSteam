@@ -62,12 +62,13 @@ SteamClient.prototype.connect = function() {
     }).bind(this));
 
     this.client.on('user', (function(friend) {
-        if(this.socket == undefined)
+        if(this.socket === undefined) {
             return;
+        }
 
         friend.avatarURL = generateAvatarURL(friend.avatarHash);
 
-        if(this.client.steamID == friend.friendid) {
+        if(this.client.steamID === friend.friendid) {
             this.socket.emit('me', friend);
         } else {
             this.socket.emit('friend', friend);
@@ -78,8 +79,9 @@ SteamClient.prototype.connect = function() {
     }).bind(this));
 
     this.client.on('friendMsg', (function(steamid, message, type) {
-        if(this.socket != undefined)
+        if(this.socket !== undefined) {
             this.socket.emit('friendMessage', {steamid: steamid, type: type, message: message});
+        }
     }).bind(this));
 
     this.client.on('error', (function(e) {
@@ -133,10 +135,11 @@ SteamClient.prototype.timeOut = function() {
     if(!this.settings['persistent']) {
         //check if they've reconnected
         setTimeout((function() {
-            if(module.exports.List[this.token] === undefined)
+            if(module.exports.List[this.token] === undefined) {
                 return;
+            }
 
-            if(module.exports.List[this.token].socket == undefined) {
+            if(module.exports.List[this.token].socket === undefined) {
                 this.logout();
             }
         }).bind(this), this.settings['timeout']);

@@ -20,12 +20,9 @@ A web based Steam chat client. Runs on NodeJS and provides a Web Client as well 
     * Friends
  * Trading
  * Console commands
-    * View connected
     * Modify whitelist
-    * Set offline
     * Send alerts
     * Disconnect users
-    * Shutdown
 
 ## Install
 Requires NodeJS.
@@ -46,3 +43,15 @@ Run `node app.js`
 `offlineMessage` *(optional)* if set then no new logins/session resumes are accepted and this error string is displayed
 
 `loggly` *(optional)* authentication config for logging to loggly (passwords are **not** logged)
+
+## Console commands
+
+`config` display current config
+
+`connected` display table of currently connected users
+
+`version` display version
+
+`setstate [state] [message]` changes online state to value [state] (TRUE/FALSE) and if false then offline message set to [message] (STRING)
+
+`quit` stop the server
