@@ -121,6 +121,10 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
         $location.path('/login');
     }
 
+    $scope.viewProfile = function(id) {
+        Steam.emit('friend:profile', {friend: id});
+    }
+
     Steam.on('resume:failed', function() {
         $location.path('/login');
     });
@@ -146,6 +150,10 @@ controllers.controller('AppController', function($scope, $rootScope, $location, 
         $scope.user = friend;
 
         $rootScope.title = $scope.user.playerName;
+    });
+
+    Steam.on('friend:profile', function(data) {
+        console.log(data);
     });
 
     Steam.on('friendMessage', function(data) {

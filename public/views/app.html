@@ -9,7 +9,7 @@
 		<div class="user-bar">
 			<div class="wrapper">
 				<div class="user-info-links">
-					<a href="#">Profile</a>
+					<a ng-click="viewProfile(friends[currentFriend].friendid)">Profile</a>
 					<a href="#">Trade</a>
 				</div>
 				<img ng-src="{{ friends[currentFriend].avatarURL }}" />

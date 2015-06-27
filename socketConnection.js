@@ -2,6 +2,7 @@ var steamClient = require('./steamClient');
 var SteamClient = steamClient.Client;
 var uuid = require('uuid');
 var config = require('./config');
+var parseString = require('xml2js').parseString;
 
 module.exports = function (socket) {
     //tell them straight away that we're offline
@@ -34,6 +35,40 @@ module.exports = function (socket) {
         }
 
         socket['steam'].client.sendMessage(request.steamid, request.message);
+    });
+
+    socket.on('friend:profile', function(request) {
+        if(socket['steam'] === undefined) {
+            return;
+        }
+
+        socket['steam'].client.webLogOn(function (cookies) {
+            console.log("COOKIES", cookies);
+
+            var request = require('request');
+
+            request.cookie('steamLogin=' + cookies['steamLogin']);
+            request.cookie('steamLoginSecure=' + cookies['steamLoginSecure']);
+            request.cookie('sessionid=' + cookies['sessionid']);
+
+            console.log(request);
+
+            var options = {
+                url: 'http://steamcommunity.com/id/' + request.friend + '?xml=1',
+            };
+
+            function callback(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    parseString(body, function (err, result) {
+                        socket.emit('friend:profile', result.profile);
+                    });
+                } else {
+                    winston.error('steam profile request failed', {username: this.username, friend: request.friend});
+                }
+            }
+
+            request(options, callback);
+        });
     });
 
     socket.on('login', function (request) {
